@@ -40,7 +40,7 @@ main {
 @media (min-width: 900px) {
   .controls-container {
     grid-template-columns: 1fr 1.3fr;
-    align-items: start;
+    align-items: stretch;
   }
 }
 

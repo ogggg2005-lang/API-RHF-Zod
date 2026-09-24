@@ -55,11 +55,13 @@ export default function ProductForm({ editing, onSave, onCancel }: ProductFormPr
     reset();
   }
 
+  const isFormComplete = isDirty && isValid;
+
   return (
     <div className="panel-card">
       <h2 className="panel-title">{editing ? "แก้ไขข้อมูลสินค้า" : "เพิ่มสินค้าใหม่"}</h2>
       <form onSubmit={handleSubmit(submitProduct)} noValidate>
-        <div className="form-grid">
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px 14px" }}>
           <div className="form-group">
             <label htmlFor="title">ชื่อสินค้า</label>
             <input
@@ -69,31 +71,6 @@ export default function ProductForm({ editing, onSave, onCancel }: ProductFormPr
               aria-invalid={!!errors.title}
             />
             <span className="error-text">{errors.title?.message}</span>
-          </div>
-
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
-            <div className="form-group">
-              <label htmlFor="price">ราคา ($)</label>
-              <input
-                id="price"
-                type="number"
-                step="0.01"
-                {...register("price", { valueAsNumber: true })}
-                aria-invalid={!!errors.price}
-              />
-              <span className="error-text">{errors.price?.message}</span>
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="stock">จำนวนคงเหลือ</label>
-              <input
-                id="stock"
-                type="number"
-                {...register("stock", { valueAsNumber: true })}
-                aria-invalid={!!errors.stock}
-              />
-              <span className="error-text">{errors.stock?.message}</span>
-            </div>
           </div>
 
           <div className="form-group">
@@ -110,6 +87,29 @@ export default function ProductForm({ editing, onSave, onCancel }: ProductFormPr
           </div>
 
           <div className="form-group">
+            <label htmlFor="price">ราคา ($)</label>
+            <input
+              id="price"
+              type="number"
+              step="0.01"
+              {...register("price", { valueAsNumber: true })}
+              aria-invalid={!!errors.price}
+            />
+            <span className="error-text">{errors.price?.message}</span>
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="stock">จำนวนคงเหลือ</label>
+            <input
+              id="stock"
+              type="number"
+              {...register("stock", { valueAsNumber: true })}
+              aria-invalid={!!errors.stock}
+            />
+            <span className="error-text">{errors.stock?.message}</span>
+          </div>
+
+          <div className="form-group">
             <label htmlFor="thumbnail">URL รูปภาพ</label>
             <input
               id="thumbnail"
@@ -120,20 +120,27 @@ export default function ProductForm({ editing, onSave, onCancel }: ProductFormPr
             <span className="error-text">{errors.thumbnail?.message}</span>
           </div>
 
-          <div className="btn-group">
-            <button
-              type="submit"
-              className="btn-primary"
-              disabled={!isDirty || !isValid}
-              style={{ flex: 1 }}
-            >
-              {editing ? "บันทึกการแก้ไข" : "เพิ่มสินค้า"}
-            </button>
-            {editing && (
-              <button type="button" className="btn-secondary" onClick={onCancel}>
-                ยกเลิก
+          <div className="form-group" style={{ justifyContent: "flex-end" }}>
+            <div className="btn-group" style={{ margin: 0 }}>
+              <button
+                type="submit"
+                disabled={!isFormComplete}
+                style={{
+                  flex: 1,
+                  backgroundColor: isFormComplete ? "#16a34a" : "#dc2626",
+                  color: "#ffffff",
+                  opacity: 1,
+                }}
+              >
+                {editing ? "บันทึก" : "เพิ่มสินค้า"}
               </button>
-            )}
+              {editing && (
+                <button type="button" className="btn-secondary" onClick={onCancel}>
+                  ยกเลิก
+                </button>
+              )}
+            </div>
+            <span className="error-text" style={{ minHeight: "16px" }} />
           </div>
         </div>
       </form>
