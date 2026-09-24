@@ -9,6 +9,9 @@ type ProductSearchFormProps = {
   onSearch: (query: SearchQuery) => Promise<void>;
 };
 
+// สร้างรายการตัวเลือก 10 ถึง 30
+const LIMIT_OPTIONS = Array.from({ length: 21 }, (_, index) => 10 + index);
+
 export default function ProductSearchForm({ onSearch }: ProductSearchFormProps) {
   const {
     register,
@@ -36,15 +39,18 @@ export default function ProductSearchForm({ onSearch }: ProductSearchFormProps) 
           </div>
 
           <div className="form-group">
-            <label htmlFor="limit">จำนวนที่ต้องการแสดง (1-30)</label>
-            <input
+            <label htmlFor="limit">จำนวนรายการ</label>
+            <select
               id="limit"
-              type="number"
-              min={1}
-              max={30}
               {...register("limit", { valueAsNumber: true })}
               aria-invalid={!!errors.limit}
-            />
+            >
+              {LIMIT_OPTIONS.map((val) => (
+                <option key={val} value={val}>
+                  {val}
+                </option>
+              ))}
+            </select>
             <span className="error-text">{errors.limit?.message}</span>
           </div>
 
