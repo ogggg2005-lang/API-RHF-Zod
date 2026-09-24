@@ -1,0 +1,23 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "title": "iPhone 15 Pro",
+      "price": 999,
+      "stock": 15,
+      "category": "smartphones",
+      "thumbnail": "https://cdn.dummyjson.com/products/images/smartphones/iPhone%2013%20Pro/thumbnail.png"
+    },
+    {
+      "id": 2,
+      "title": "MacBook Air M2",
+      "price": 1199,
+      "stock": 8,
+      "category": "laptops",
+      "thumbnail": "https://cdn.dummyjson.com/products/images/laptops/Apple%20MacBook%20Pro%2014%20Inch%20Space%20Grey/thumbnail.png"
+    }
+  ],
+  "total": 2,
+  "skip": 0,
+  "limit": 10
+}
