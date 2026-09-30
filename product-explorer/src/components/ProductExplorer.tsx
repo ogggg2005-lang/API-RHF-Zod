@@ -29,10 +29,6 @@ export default function ProductExplorer() {
     setStatus("error");
   }
 
-  useEffect(() => {
-    fetchProducts(defaultQuery).then(showResult).catch(showError);
-  }, []);
-
   async function loadProducts(query: SearchQuery) {
     setStatus("loading");
     setErrorMessage("");
@@ -43,6 +39,10 @@ export default function ProductExplorer() {
       showError(error);
     }
   }
+
+  useEffect(() => {
+    void loadProducts(defaultQuery);
+  }, []);
 
   function saveProduct(draft: ProductDraft) {
     if (editingProduct) {
@@ -73,8 +73,14 @@ export default function ProductExplorer() {
       </div>
 
       <section aria-live="polite">
-        {status === "loading" && <div className="status-msg status-loading">กำลังโหลดข้อมูลสินค้า...</div>}
-        {status === "error" && <div className="status-msg status-error" role="alert">{errorMessage}</div>}
+        {status === "loading" && (
+          <div className="status-msg status-loading">กำลังโหลดข้อมูลสินค้า...</div>
+        )}
+        {status === "error" && (
+          <div className="status-msg status-error" role="alert">
+            {errorMessage}
+          </div>
+        )}
         {status === "ready" && products.length === 0 && (
           <div className="status-msg status-empty">ไม่พบสินค้าที่ตรงกับเงื่อนไข</div>
         )}
